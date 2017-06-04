@@ -1,26 +1,35 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-class HelloWorld extends React.Component {
-  render () {
-      return (
-        <div>
-          <p>Hello, {this.props.greetTarget}!</p>
-        </div>
-    );
-  }
-};
-
-class Buttonify extends React.Component {
-  render(){
+class Letter extends React.Component {
+  render() {
+    var letterStyle = {
+      padding: '10px',
+      margin: '10px',
+      backgroundColor: this.props.bgcolor,
+      color: '#333',
+      display: 'inline-block',
+      fontFamily: 'monospace',
+      fontSize: '32px',
+      textAlign: 'center'
+    };
     return (
-      <button type={this.props.behavior}>{this.props.children}</button>
+      <div style={letterStyle}>
+        {this.props.children}
+      </div>
     );
   }
 };
 
-render (
+var destination = document.querySelector('#container');
+
+render(
   <div>
-    <HelloWorld greetTarget='Bishop'/>
-    <Buttonify behavior='Submit'>This is a test button, a long test button.</Buttonify>
-  </div>, document.getElementById('container'));
+  <Letter bgcolor="#58B3FF">A</Letter>
+  <Letter bgcolor="#FF605F">E</Letter>
+  <Letter bgcolor="#FFD52E">I</Letter>
+  <Letter bgcolor="#49DD8E">O</Letter>
+  <Letter bgcolor="#AE99FF">U</Letter>
+  </div>,
+  destination
+);
