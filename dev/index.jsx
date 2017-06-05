@@ -1,35 +1,58 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-class Letter extends React.Component {
-  render() {
-    var letterStyle = {
-      padding: '10px',
-      margin: '10px',
-      backgroundColor: this.props.bgcolor,
-      color: '#333',
-      display: 'inline-block',
-      fontFamily: 'monospace',
-      fontSize: '32px',
+var destination = document.querySelector('#container');
+
+
+
+class Label extends React.Component {
+  render () {
+    var labelStyle = {
+      fontFamily: 'sans-serif',
+      fontWeight: 'bold',
       textAlign: 'center'
     };
     return (
-      <div style={letterStyle}>
-        {this.props.children}
+      <p style={labelStyle}>{this.props.color}</p>
+    );
+  }
+};
+
+class Square extends React.Component {
+  render () {
+    var squareStyle = {
+      height: '150px',
+      backgroundColor: this.props.color
+    };
+    return (
+      <div style={squareStyle}>
       </div>
     );
   }
 };
 
-var destination = document.querySelector('#container');
-
+class Card extends React.Component {
+  render () {
+    var cardStyle = {
+      height: '200px',
+      width: '150px',
+      backgroundColor: '#FFF',
+      padding: '0px',
+      margin: '2em',
+      WebkitFilter: 'drop-shadow(0px 0px 5px #666)',
+      filter: 'drop-shadow(0px 0px 5px #666)'
+    };
+    return (
+      <div style = {cardStyle}>
+        <Square color={this.props.color}/>
+        <Label color={this.props.color}/>
+      </div>
+    );
+  }
+};
 render(
   <div>
-  <Letter bgcolor="#58B3FF">A</Letter>
-  <Letter bgcolor="#FF605F">E</Letter>
-  <Letter bgcolor="#FFD52E">I</Letter>
-  <Letter bgcolor="#49DD8E">O</Letter>
-  <Letter bgcolor="#AE99FF">U</Letter>
+    <Card color="#FFA737"/>
   </div>,
   destination
 );
