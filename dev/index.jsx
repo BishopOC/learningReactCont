@@ -3,21 +3,6 @@ import {render} from 'react-dom';
 
 var destination = document.querySelector('#container');
 
-
-
-class Label extends React.Component {
-  render () {
-    var labelStyle = {
-      fontFamily: 'sans-serif',
-      fontWeight: 'bold',
-      textAlign: 'center'
-    };
-    return (
-      <p style={labelStyle}>{this.props.color}</p>
-    );
-  }
-};
-
 class Square extends React.Component {
   render () {
     var squareStyle = {
@@ -27,6 +12,18 @@ class Square extends React.Component {
     return (
       <div style={squareStyle}>
       </div>
+    );
+  }
+};
+class Label extends React.Component {
+  render () {
+    var labelStyle = {
+      fontFamily: 'sans-serif',
+      fontWeight: 'bold',
+      textAlign: 'center'
+    };
+    return (
+      <p style={labelStyle}>{this.props.colorName}</p>
     );
   }
 };
@@ -44,15 +41,33 @@ class Card extends React.Component {
     };
     return (
       <div style = {cardStyle}>
-        <Square color={this.props.color}/>
-        <Label color={this.props.color}/>
+        <Square {...this.props}/>
+        <Label {...this.props}/>
       </div>
     );
   }
 };
+
+class Inline extends React.Component {
+  render (){
+    var inlineStyle = {
+      display: "inline-block"
+    }
+    return (
+      <div style = {inlineStyle}>
+        <Card {...this.props}/>
+      </div>
+    )
+  }
+}
 render(
   <div>
-    <Card color="#FFA737"/>
+    <Inline color="#FFA737" colorName="Orange"/>
+    <Inline color="blue" colorName="Blue"/>
+    <Inline color="chartreuse" colorName="Chartreuse"/>
+    <Inline color="red" colorName="Red"/>
+    <Inline color="orange" colorName="Orange"/>
+    <Inline color="lightBlue" colorName="Light Blue"/>
   </div>,
   destination
 );
