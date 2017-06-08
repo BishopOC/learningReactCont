@@ -3,51 +3,172 @@ import {render} from 'react-dom';
 
 var destination = document.querySelector('#container');
 
-class LightningCounter extends React.Component {
+// class LightningCounter extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.timerTick = this.timerTick.bind(this);
+//     this.state = {
+//       strikes: 0
+//     }
+//   }
+//   timerTick(){
+//     this.setState({
+//       strikes: this.state.strikes + 1
+//     });
+//   }
+//   componentDidMount(){
+//     setInterval(this.timerTick, 1000);
+//   }
+//   render(){
+//     return (
+//       <h1>{this.state.strikes}</h1>
+//     );
+//   };
+// };
+//
+// class LightningCounterDisplay extends React.Component {
+//   render(){
+//     var divStyle = {
+//       width: '250px',
+//       textAlign: 'center',
+//       backgroundColor: 'black',
+//       padding: '40px',
+//       fontFamily: 'sans-serif',
+//       color: '#999',
+//       borderRadius: '10px'
+//       }
+//     return (
+//       <div style={divStyle}>
+//       <LightningCounter/>
+//       </div>
+//     )
+//   }
+// }
+
+
+// class Circle extends React.Component {
+//
+//   render(){
+//     var circleStyle = {
+//       padding: '10px',
+//       margin: '20px',
+//       display: 'inline-block',
+//       backgroundColor: this.props.bgColor,
+//       borderRadius: '50%',
+//       width: '100px',
+//       height: '100px'
+//     };
+//     return (
+//       <div style = {circleStyle}>
+//       </div>
+//     );
+//   }
+// }
+//
+//
+//   var colors = ["#393E41", "#E94F37", "#1C89BF", "#A1D363", "#85FFC7", "#297373", "#FF8552", "#A40E4C"];
+//   var renderData = [];
+//
+//   for(var i = 0; i < colors.length; i++){
+//     var color = colors[i];
+//     renderData.push(<Circle key={i + color} bgColor={colors[i]}/>)
+//   }
+
+class Counter extends React.Component {
+  render(){
+    var textStyle = {
+      fontSize: '72px',
+      fontFamily: 'sans-serif',
+      color: '#333',
+      fontWeight: 'bold'
+    };
+    return (
+      <div style = {textStyle}>
+        {this.props.display}
+      </div>
+    );
+  }
+}
+
+class CounterParent extends React.Component {
   constructor(props) {
     super(props);
-    this.timerTick = this.timerTick.bind(this);
+    this.increase = this.increase.bind(this);
+    this.decrease = this.decrease.bind(this);
     this.state = {
-      strikes: 0
+      count: 0
     }
   }
-  timerTick(){
+  increase(e) {
+    var currentCount = this.state.count;
+    if(e.shiftKey) {
+      currentCount += 10;
+    } else {
+      currentCount += 1;
+    }
     this.setState({
-      strikes: this.state.strikes + 1
+      count: currentCount
     });
   }
-  componentDidMount(){
-    setInterval(this.timerTick, 1000);
-  }
-  render(){
-    return (
-      <h1>{this.state.strikes}</h1>
-    );
-  };
-};
 
-class LightningCounterDisplay extends React.Component {
-  render(){
-    var divStyle = {
+  decrease(e){
+    var currentCount = this.state.count;
+    if(e.shiftKey) {
+      currentCount -= 10;
+    } else {
+      currentCount -= 1;
+    }
+    this.setState({
+      count: currentCount
+    });
+  }
+  render (){
+    var backgroundStyle = {
+      padding: '50px',
+      backgroundColor: '#FFC53A',
       width: '250px',
-      textAlign: 'center',
-      backgroundColor: 'black',
-      padding: '40px',
+      height: '100px',
+      borderRadius: '10px',
+      textAlign: 'center'
+    };
+
+    var buttonStyle = {
+      fontSize: '1em',
+      width: '30px',
+      height: '30px',
       fontFamily: 'sans-serif',
-      color: '#999',
-      borderRadius: '10px'
-      }
-    return (
-      <div style={divStyle}>
-      <LightningCounter/>
+      color: '#333',
+      fontWeight: 'bold',
+      lineHeight: '3px',
+      borderRadius:'5px',
+      margin: '5px',
+      borderStyle: 'none',
+      backgroundColor: 'lightblue',
+      border: 'solid 2px black'
+    };
+    var buttonActive = {
+      backgroundColor: 'green'
+    }
+
+    var buttonDisplay = {
+      display: 'inline-block'
+    }
+
+    return(
+      <div style={backgroundStyle}>
+        <Counter display={this.state.count}/>
+        <div style={buttonDisplay}>
+          <button onClick={this.increase} style={buttonStyle}>+</button>
+          <button onClick={this.decrease} style={buttonStyle}>-</button>
+        </div>
       </div>
-    )
+    );
   }
 }
 
 render(
   <div>
-    <LightningCounterDisplay/>
+    <CounterParent/>
   </div>,
   destination
 );
