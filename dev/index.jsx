@@ -1,5 +1,7 @@
 import React from 'react';
-import {render} from 'react-dom';
+import ReactDOM, {render} from 'react-dom';
+
+
 
 var destination = document.querySelector('#container');
 
@@ -93,8 +95,10 @@ class Counter extends React.Component {
 class CounterParent extends React.Component {
   constructor(props) {
     super(props);
+    console.log('Get Default Props');
     this.increase = this.increase.bind(this);
     this.decrease = this.decrease.bind(this);
+    console.log('Get initial State');
     this.state = {
       count: 0
     }
@@ -110,7 +114,35 @@ class CounterParent extends React.Component {
       count: currentCount
     });
   }
-
+  componentWillUpdate(newProps, newState) {
+      console.log("componentWillUpdate: Component is about to update!");
+  }
+  componentDidUpdate(currentProps, currentState) {
+      console.log("componentDidUpdate: Component just updated!");
+  }
+  componentWillMount() {
+      console.log("componentWillMount: Component is about to mount!");
+  }
+  componentDidMount() {
+      console.log("componentDidMount: Component just mounted!");
+  }
+  componentWillUnmount() {
+      console.log("componentWillUnmount: Component is about to be removed from the DOM!");
+  }
+  shouldComponentUpdate(newProps, newState) {
+    console.log("shouldComponentUpdate: Should component update?");
+    if (newState.count < 5) {
+      console.log("shouldComponentUpdate: Component should update!");
+      return true;
+    } else {
+      ReactDOM.unmountComponentAtNode(destination);
+      console.log("shouldComponentUpdate: Component should not update!");
+      return false;
+    }
+}
+componentWillReceiveProps(newProps){
+    console.log("componentWillReceiveProps: Component will get new props!");
+  }
   decrease(e){
     var currentCount = this.state.count;
     if(e.shiftKey) {
